@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Recetas Perdidas</title>
+
+        <LINK REL="Stylesheet" HREF="style.css" TYPE="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        var preguntas = [['Blanca por dentro, verde por fuera.<br>Si quieres que te lo diga, espera.','verde','acuosa','pera','la pera'],
+                         ['Salí de mi casa, pisé una grada, me giré para atrás y no vi nada.','roja','semillas parecen munisiones','granada','la granada'],
+                         ['Si la dejamos se pasa; si la vendemos se pesa; si se hace vino se pisa; si la dejamos se posa.','con las pepas se hace aceite','12 en fin de año','uva','la uva']];
+
+        
+        function respuesta() {
+            if (document.getElementById("respuesta").value == "") return;
+            document.getElementById("contador").value = 
+                Number(document.getElementById("contador").value) + 1;
+            var ind = Number(document.getElementById("ind").value);
+            document.getElementById("pista").innerHTML = preguntas[ind][0];
+            if ((document.getElementById("respuesta").value).toLowerCase() != preguntas[ind][3] &&
+                (document.getElementById("respuesta").value).toLowerCase() != preguntas[ind][4]) {
+               var restan = 4 - Number(document.getElementById("contador").value);
+               document.getElementById("retroali").className = "alert alert-danger";
+               document.getElementById("retroali").innerHTML =  
+               "<strong>Incorrecta!</strong> vuelva intentar... restan: " + restan;
+               document.getElementById("retroali").hidden = false;            
+            } else {
+                document.getElementById("retroali").className = "alert alert-success";
+                document.getElementById("retroali").innerHTML = 
+                "<strong>Felicitaciones!</strong> la pegaste... ";
+               document.getElementById("retroali").hidden = false;   
+               document.getElementById("contador").value = "0";         
+               document.getElementById("opcion1").hidden = true;
+               document.getElementById("opcion2").hidden = true;
+               document.getElementById("opcion").hidden = false;
+            }
+            if (document.getElementById("contador").value == "4") {
+                document.getElementById("retroali").className = "alert alert-danger";
+                document.getElementById("retroali").innerHTML =  
+               "<strong>Lo Siento!</strong>Cantidad de intentos agotado...";
+               document.getElementById("retroali").hidden = false;            
+               document.getElementById("contador").value = "0";
+               document.getElementById("opcion1").hidden = true;
+               document.getElementById("opcion2").hidden = true;
+               document.getElementById("opcion").hidden = false;
+            }   
+        }        
+        function teclaPress() {
+            if (event.keyCode == 13) {
+                respuesta();
+            }            
+        }        
+        function opciones() {
+            var ind = Number(document.getElementById("ind").value);
+
+            if (document.getElementById("opcion1").hidden) {
+                document.getElementById("opcion1").innerHTML = preguntas[ind][1];
+                document.getElementById("opcion1").hidden = false;
+            } else            
+                if (document.getElementById("opcion2").hidden) {
+                   document.getElementById("opcion2").innerHTML = preguntas[ind][2];
+                   document.getElementById("opcion2").hidden = false;
+                   document.getElementById("opcion").hidden = true;
+                }            
+        }        
+        function cambiaAd() {
+            var ind = Number(document.getElementById("ind").value);
+            document.getElementById("pista").innerHTML = preguntas[ind][0];       
+            document.getElementById("retroali").hidden = true;            
+            document.getElementById("contador").value = "0";
+            document.getElementById("opcion1").hidden = true;
+            document.getElementById("opcion2").hidden = true;
+            document.getElementById("opcion").hidden = false;  
+            document.getElementById("respuesta").value = "";      
+        }
+
+    </script>
+</head>
+<body>
+ <div class="container">
+    <div class="container">  
+        <div class="container">
+            <div class="row"  style="border: 2px solid black">
+                <div class="col-sm-2">
+                    <img src="img/mis_recetas2.jpg" width="100" height="90"/>
+                </div> 
+                <div class="col-10">
+                       <h1>MIS RECETAS <span style="color:darkgrey"> pe</span><span style="color:gainsboro">rdi</span><span style="color:whitesmoke">das</h1>  
+                       <h2>Adivina Adivinador...</h2>
+                </div> 
+            </div>
+          </div>
+    
+
+    <br>
+    
+    <a href="index.html">
+        <input type="button" id="volver" value="volver al inicio...">
+    </a>    
+
+    <br>
+    Cambiar adivinanza:
+    <select  id="ind" onchange="cambiaAd()">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+    </select>
+    <br>
+    <br>
+
+    <div id="pista">
+    Blanca por dentro, verde por fuera.<br>
+    Si quieres que te lo diga, espera.
+    </div>    
+    <br>
+    <div id="opcion1" hidden=true>
+        verde
+    </div>    
+    <div id="opcion2" hidden=true>
+        acuosa
+    </div>    
+    <br>
+    <input id="respuesta" type="text" value="" placeholder="respuesta aqui..." onkeypress="teclaPress(event)">
+    <a>
+        <input type="button" id="opcion" value="opción?" onClick="opciones()">
+    </a>  
+    <a>
+        <input type="button" id="responder" value="responder" onClick="respuesta()">
+    </a>  
+
+    <input id="contador" type="text" hidden=true value="0">
+    <input id="indxx" type="text" hidden=true value="0">
+
+    <div id="retroali" hidden=true class="alert alert-danger" role="alert">
+        retroalimentacion...
+    </div> 
+    <br>
+
+
+  </div>  
+</body>
+</html>
